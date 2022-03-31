@@ -1,19 +1,23 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
+import { OPTIONS } from '@/constants/options';
+import { CreateToastBtn } from '@/components/CreateToastBtn';
+
 import {
   ListOfOptions,
   OptionsItem,
-  CreateToastBtn,
   Select,
   Option,
-  Label
+  Label,
+  Form
 } from "./styles"
 
 export const Options = memo(({ options, setOptions, createNewToast }) => {
 
   const handleChange = (event) => {
-    const {name, value, type, checked} = event.target
+    const { name, value, type, checked } = event.target;
+
     setOptions(options => {
       return {
         ...options,
@@ -23,54 +27,27 @@ export const Options = memo(({ options, setOptions, createNewToast }) => {
   }
 
   return (
-    <form>
+    <Form>
       <ListOfOptions>
-        <OptionsItem>
-            <Label>Title</Label>
+        {OPTIONS.map(option => (
+          <OptionsItem key={ option.id }>
+            <Label>{ option.title }</Label>
             <Select 
-              value={options.title}
-              onChange={handleChange}
-              name="title">
-              <Option value="">-- Choose --</Option>
-                <Option value="error">Error</Option>
-                <Option value="warning">Warning</Option>
-                <Option value="success">Success</Option>
-                <Option value="info">Info</Option>
+              value={ options[option.name] }
+              onChange={ handleChange }
+              name={option.name}
+            >
+              <Option value={ option.option.value1 }>{ option.option.content1 }</Option>
+                <Option value={ option.option.value2 }>{ option.option.content2 }</Option>
+                <Option value={ option.option.value3 }>{ option.option.content3 }</Option>
+                <Option value={ option.option.value4 }>{ option.option.content4 }</Option>
+                <Option value={ option.option.value5 }>{ option.option.content5 }</Option>
             </Select>
         </OptionsItem>
-        <OptionsItem>
-            <Label>Type</Label>
-            <Select 
-              value={options.type}
-              onChange={handleChange}
-              name="type">
-              <Option value="">-- Choose --</Option>
-                <Option value="error">Error</Option>
-                <Option value="warning">Warning</Option>
-                <Option value="success">Success</Option>
-                <Option value="info">Info</Option>
-            </Select>
-        </OptionsItem>
-        <OptionsItem>
-            <Label>Position</Label>
-            <Select 
-              value={options.position}
-              onChange={handleChange}
-              name="position">
-              <Option value="">-- Choose --</Option>
-                <Option value="top-right">Top-right</Option>
-                <Option value="top-left">Top-left</Option>
-                <Option value="bottom-right">Bottom-right</Option>
-                <Option value="bottom-left">Bottom-left</Option>
-            </Select>
-        </OptionsItem>
+        ))}
       </ListOfOptions>
-      <CreateToastBtn
-        onClick={createNewToast}
-      >
-        Create new toast
-      </CreateToastBtn>
-    </form>
+      <CreateToastBtn createNewToast={createNewToast} type={ options.type }/>
+    </Form>
   );
 });
 

@@ -1,9 +1,10 @@
-import React, { useEffect, useState, memo} from 'react';
+import React, { useEffect, useState, useMemo} from 'react';
 import { ThemeProvider } from "styled-components";
 
 import { Options } from '@/components/Options';
 import { ToastsList } from '@/components/ToastsList';
 
+import { ToastsProvider } from '@/context';
 import Singleton from '@/singleton';
 import { theme } from "@/theme";
 
@@ -16,37 +17,54 @@ import { Portal } from '../Portal';
 const singleton = new Singleton();
   
 export const App = () => {
-  const [toasts, setToasts] = useState([]);
+  const [toasts, setToasts] = useState(() => singleton.findAllToasts());
+  const value = useMemo(
+    () => ({ toasts, setToasts }), 
+    [toasts]
+  );
   const [options, setOptions] = useState({
-    color: "",
-    position: "",
-    title: "",
-    description: "",
     type: "",
+    title: "",
+    position: "",
+    color: "",
+    description: "",  
     margins: 0
   })
-
-  useEffect(() => {
-    const toasts = singleton.findAllToasts();
-    setToasts(toasts)
-  }, [])
 
   const createNewToast = (e) => {
     e.preventDefault();
     singleton.createToast(options);
-    setToasts(toasts => [...toasts, options])
+
+    // setToasts(toasts => (
+    //   {
+    //     ...toasts,
+    //     [options.type] : [...toasts[options.type], options]
+    //   }
+    // ))
+
+    setToasts(toasts => (
+      [...toasts, options]
+    ))
   }
+
+  // console.log("from app context", toasts)
 
   return (
     <ThemeProvider theme={theme}>
-      <Container>
-        <Title>Toast Constructor</Title>
-        <Options options={options} setOptions={setOptions} createNewToast={createNewToast}/>
-        <Portal>
-          <ToastsList toasts={toasts} />
-        </Portal>
-      </Container>
+      <ToastsProvider value={value}>
+        <Container>
+          <Title>Toast Constructor</Title>
+          <Options
+            options={options}
+            setOptions={setOptions}
+            createNewToast={createNewToast}
+          />
+          <Portal>
+            <ToastsList />
+          </Portal>
+        </Container>
+      </ToastsProvider>
+      
     </ThemeProvider>
-    
   );
 };

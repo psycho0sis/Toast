@@ -6,7 +6,7 @@ import replace from "@rollup/plugin-replace";
 import path from "path";
 import livereload from "rollup-plugin-livereload";
 import serve from "rollup-plugin-serve";
-import svgr from '@svgr/rollup';
+import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 
 const root = path.resolve(__dirname);
@@ -20,7 +20,7 @@ export default {
     postcss({
       extensions: [".css"]
     }),
-    svgr(),
+    image(),
     alias({
       resolve: ["*", ".js", ".jsx", ".svg"],
       entries: [

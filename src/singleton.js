@@ -4,8 +4,8 @@ export default class Singleton {
       return Singleton.inctance;
     }
     Singleton.inctance = this;
-    Singleton.exists = true;
-    this.toasts = [];
+    Singleton.exists = true; 
+    this.toasts = []
   }
 
   findAllToasts() {
@@ -16,7 +16,7 @@ export default class Singleton {
     this.toasts.push(toast);
   }
 
-  deleteToas(toasId) {
-    this.toasts = this.toasts.filter(toast => toast.id !== toasId)
+  deleteToast(toasIdndex) {
+    this.toasts = this.toasts.filter((toast, i) => i !== toasIdndex)
   }
 }
