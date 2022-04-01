@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { theme } from '../../theme';
 
 export const Container = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  width: 26vw;
 `

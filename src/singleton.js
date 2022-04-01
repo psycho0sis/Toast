@@ -13,10 +13,23 @@ export default class Singleton {
   }
 
   createToast(toast) {
+    if (this.toasts.length > 2) {
+      return;
+    }
     this.toasts.push(toast);
+
+    // console.log(this.toasts)
   }
 
   deleteToast(toasIdndex) {
     this.toasts = this.toasts.filter((toast, i) => i !== toasIdndex)
+
+    // console.log(this.toasts)
+  }
+
+  deleteAllToasts() {
+    this.toasts.length = 0;
+
+    // console.log(this.toasts)
   }
 }

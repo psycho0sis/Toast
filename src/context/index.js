@@ -1,10 +1,10 @@
-import React from 'react';
+import { createContext } from 'react';
 
-import Singleton from './singleton';
+import Singleton from '@/singleton';
 
 const singleton = new Singleton();
 
-const ToastsContext = React.createContext({
+const ToastsContext = createContext({
   toasts: singleton.findAllToasts(),
   setToasts: () => {}
 })

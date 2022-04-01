@@ -46,3 +46,11 @@
   align-items: center;
   height: 100vh;
 }
+
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}

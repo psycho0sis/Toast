@@ -7,7 +7,11 @@ import {
 
 export const CreateToastBtn = ({ createNewToast, type }) => {
   return (
-    <CreateToastButton onClick={createNewToast} disabled={type ? false : true}>
+    <CreateToastButton
+      onClick={createNewToast}
+      type="submit"
+      disabled={type ? false : true}
+    >
       Create new toast
     </CreateToastButton>
   );

@@ -1,59 +1,55 @@
-import React, { useEffect, useState, useMemo} from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { ThemeProvider } from "styled-components";
 
+import { Portal } from '@/components/Portal';
 import { Options } from '@/components/Options';
 import { ToastsList } from '@/components/ToastsList';
 
 import { ToastsProvider } from '@/context';
 import Singleton from '@/singleton';
+import { useStateCallback } from '@/hooks/useStateCallback';
 import { theme } from "@/theme";
 
 import {
   Container,
   Title,
 } from './styles';
-import { Portal } from '../Portal';
+
 
 const singleton = new Singleton();
   
 export const App = () => {
-  const [toasts, setToasts] = useState(() => singleton.findAllToasts());
+  const [toasts, setToasts] = useStateCallback(() => singleton.findAllToasts());
   const value = useMemo(
     () => ({ toasts, setToasts }), 
     [toasts]
   );
+
   const [options, setOptions] = useState({
-    type: "",
-    title: "",
-    position: "",
-    color: "",
-    description: "",  
-    margins: 0
+    type: "info",
+    title: "Example",
+    position: "top-left",
+    color: theme.colors.defaultToastBg,
+    description: "Example description",  
+    margins: "10px",
+    duration: "3000",
+    autoHidden: false
   })
 
-  const createNewToast = (e) => {
+  const createNewToast = useCallback((e) => {
     e.preventDefault();
-    singleton.createToast(options);
-
-    // setToasts(toasts => (
-    //   {
-    //     ...toasts,
-    //     [options.type] : [...toasts[options.type], options]
-    //   }
-    // ))
-
-    setToasts(toasts => (
-      [...toasts, options]
-    ))
-  }
-
-  // console.log("from app context", toasts)
+    if (toasts.length < 3) {
+      setToasts(prevToasts => ([...prevToasts, options]), () => singleton.createToast(options))
+    }
+  }, [options]);
 
   return (
     <ThemeProvider theme={theme}>
       <ToastsProvider value={value}>
         <Container>
-          <Title>Toast Constructor</Title>
+          <Title>
+            Toast Constructor
+          </Title>
           <Options
             options={options}
             setOptions={setOptions}
@@ -64,7 +60,6 @@ export const App = () => {
           </Portal>
         </Container>
       </ToastsProvider>
-      
     </ThemeProvider>
   );
 };

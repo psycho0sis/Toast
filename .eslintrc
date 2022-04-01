@@ -17,7 +17,6 @@
         "import/no-anonymous-default-export": "off",
         "better-styled-components/sort-declarations-alphabetically": 2
     },
-    "react/display-name": [0, { "ignoreTranspilerName": false }],
     "settings": {
         "react": {
         "version": "detect"
