@@ -1,11 +1,11 @@
+import "@/index.css";
+
 import React, { memo, useContext, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { ProgressBar } from '@/components/ProgressBar';
 
-import { TOAST_POSITION } from '@/constants/toastPosition';
 import { ICONS } from '@/constants/icons';
-
 import ToastsContext from '@/context';
 import Singleton from '@/singleton';
 import { addClass } from '@/utils/addClass';
@@ -22,22 +22,20 @@ import {
   Button
 } from './styles';
 
-import "@/index.css";
-
 import deleteImg from "@/assets/delete.svg";
 
+const singleton = new Singleton();
 
-export const ToastItem = memo(({ color, title, type, position, description, margins, duration, autoHidden, index }) => {
+export const ToastItem = memo(({ color, title, type, description, margins, duration, autoHidden, index }) => {
   const [barValue, setBarValue] = useState(0);
-  const { setToasts } = useContext(ToastsContext);
+  const { toasts, setToasts } = useContext(ToastsContext);
   const ref = useRef(null);
-  const singleton = new Singleton();
   const customTitle = fistLetterCapitalize(title);
 
   const deleteToast = (index) => () => {
     if (!autoHidden) {
-      addClass(ref.current, position);
-
+      addClass(ref.current);
+        
       setTimeout(() => {
         singleton.deleteToast(index);
         setToasts(singleton.findAllToasts());
@@ -47,37 +45,36 @@ export const ToastItem = memo(({ color, title, type, position, description, marg
 
   useEffect(() => {
     if (autoHidden) {
-      setTimeout(() => {
-        addClass(ref.current, position);
-      }, +duration)
+      const interval = setInterval(() => {
+        setBarValue(oldValue => {
+          const newValue = oldValue + 1;
+          if (newValue === 100) {
+            addClass(ref.current);
+            clearInterval(interval);
+            singleton.deleteToast(index);
+          }
+          return newValue;
+        });
+      }, (+duration / 100));
 
+      return () => clearInterval(interval);
+    }
+      
+  }, []);
+
+  useEffect(() => {
+    if (autoHidden) {
       setTimeout(() => {
         singleton.deleteAllToasts();
         setToasts(singleton.findAllToasts());
-      }, +duration)
-    }
-  }, [autoHidden])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBarValue(oldValue => {
-        const newValue = oldValue + 1;
-        if (newValue === 100) {
-          clearInterval(interval);
-        }
-
-        return newValue;
-      });
-    }, (+duration / 100));
-
-    return () => clearInterval(interval);
-  }, []);
+      }, +duration + 1000)
+    } 
+  }, [toasts])
 
   return (
     <Container
       type={type}
       color={color}
-      position={TOAST_POSITION[position]}
       margins={margins}
       index={index}
       ref={ref}
@@ -99,7 +96,7 @@ export const ToastItem = memo(({ color, title, type, position, description, marg
       </TitleContainer>
       <Content>
         <Image
-          src={ICONS[type] || null}
+          src={ICONS[type]}
           width={40}
           height={40}
         />

@@ -31,22 +31,21 @@ export const OptionsItem = styled.li`
   width: ${WIDTH};
 `
 export const Select = styled.select`
-  border: 1px solid black;
   background-color: ${({ theme }) => theme.background};
   border: 1px solid ${({ theme }) => theme.text};
+  border: 1px solid black;
   border-radius: ${({ theme }) => theme.borderRadius[1]}px;
   color: ${({ theme }) => theme.colors.button};
-  font-size: ${({ theme }) => theme.fontSize[2]};
+  font-size: ${({ theme }) => theme.fontSize[1]}px;
   line-height: inherit;
   padding: ${({ theme }) => theme.spacing[3]}px;
   position: relative;
   transition: 0.4s all ease;
   width: ${WIDTH};
   
-    &:hover {
-      background: ${({ theme }) => theme.hover};
-      transform: scale(${SCALE});
-    }
+  &:hover {
+    background: ${({ theme }) => theme.hover};
+    transform: scale(${SCALE});
   }
 `
 export const Option = styled.option`
@@ -66,10 +65,14 @@ export const Input = styled.input`
   border-radius: ${({ theme }) => theme.borderRadius[1]}px;
   color: ${({ theme }) => theme.colors.button};
   display: block;
-  font-size: ${({ theme }) => theme.fontSize[2]};
+  font-size: ${({ theme }) => theme.fontSize[1]}px;
   line-height: inherit;
   padding: ${({ theme }) => theme.spacing[3]}px;
   position: relative;
   transition: 0.4s all ease;
   width: ${WIDTH};
+
+  &:focus::-webkit-input-placeholder {
+    color: transparent
+  }
 `

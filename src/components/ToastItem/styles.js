@@ -20,18 +20,13 @@ export const Container = styled.div`
   background-color: ${props => props.color ? props.color : theme.colors.defaultToastBg};
   border: 1px solid ${props => props.color ? props.color : "black"};
   border-radius: ${({ theme }) => theme.borderRadius[1]}px;
-  bottom: ${props => props.position.bottom + props.index * 20}%;
   color: ${({ theme }) => theme.colors.text};
   display: flex; 
   flex-direction: column;
   height: ${HEIGTH};
   justify-content: space-around;
-  left: ${props => props.position.left};
   margin: ${props => props.margins ? props.margins : theme.spacing[3]}px;
   padding: ${({ theme }) => theme.spacing[3]}px;
-  position: absolute;
-  right: ${props => props.position.right};
-  top: ${props => props.position.top + props.index * 20}%;
   transition: 0.5s all ease;
   width: ${WIDTH};
   z-index: 2;

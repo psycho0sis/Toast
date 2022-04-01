@@ -15,7 +15,6 @@ import {
   Title,
 } from './styles';
 
-
 const singleton = new Singleton();
   
 export const App = () => {
@@ -31,16 +30,14 @@ export const App = () => {
     position: "top-left",
     color: theme.colors.defaultToastBg,
     description: "Example description",  
-    margins: "10px",
+    margins: "10",
     duration: "3000",
     autoHidden: false
   })
 
   const createNewToast = useCallback((e) => {
     e.preventDefault();
-    if (toasts.length < 3) {
-      setToasts(prevToasts => ([...prevToasts, options]), () => singleton.createToast(options))
-    }
+    setToasts(prevToasts => ([...prevToasts, options]), () => singleton.createToast(options))
   }, [options]);
 
   return (
@@ -56,7 +53,7 @@ export const App = () => {
             createNewToast={createNewToast}
           />
           <Portal>
-            <ToastsList />
+            <ToastsList position={options.position}/>
           </Portal>
         </Container>
       </ToastsProvider>
