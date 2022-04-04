@@ -26,22 +26,19 @@ import deleteImg from "@/assets/delete.svg";
 
 const singleton = new Singleton();
 
-export const ToastItem = memo(({ color, title, type, description, margins, duration, autoHidden, index }) => {
+export const ToastItem = memo(({ color, title, type, description, duration, autoHidden, animation, index }) => {
   const [barValue, setBarValue] = useState(0);
   const { toasts, setToasts } = useContext(ToastsContext);
   const ref = useRef(null);
   const customTitle = fistLetterCapitalize(title);
+  const { colors } = theme;
 
   const deleteToast = (index) => () => {
     if (!autoHidden) {
-      addClass(ref.current);
-        
-      setTimeout(() => {
-        singleton.deleteToast(index);
-        setToasts(singleton.findAllToasts());
-      }, 1000)
+      singleton.deleteToast(index);
+      setToasts(singleton.findAllToasts());
     }
-  }
+  };
 
   useEffect(() => {
     if (autoHidden) {
@@ -49,17 +46,15 @@ export const ToastItem = memo(({ color, title, type, description, margins, durat
         setBarValue(oldValue => {
           const newValue = oldValue + 1;
           if (newValue === 100) {
-            addClass(ref.current);
+            addClass(ref.current, animation);
             clearInterval(interval);
             singleton.deleteToast(index);
           }
           return newValue;
         });
       }, (+duration / 100));
-
       return () => clearInterval(interval);
     }
-      
   }, []);
 
   useEffect(() => {
@@ -68,15 +63,17 @@ export const ToastItem = memo(({ color, title, type, description, margins, durat
         singleton.deleteAllToasts();
         setToasts(singleton.findAllToasts());
       }, +duration + 1000)
-    } 
-  }, [toasts])
+    }
+  }, [toasts]);
 
   return (
     <Container
-      type={type}
+      animation={animation}
       color={color}
-      margins={margins}
       index={index}
+      // margins={margins}
+      // position={position}
+      type={type}
       ref={ref}
     > 
       <TitleContainer>
@@ -95,19 +92,15 @@ export const ToastItem = memo(({ color, title, type, description, margins, durat
         </Button>
       </TitleContainer>
       <Content>
-        <Image
-          src={ICONS[type]}
-          width={40}
-          height={40}
-        />
+        <Image src={ICONS[type]} width={40}  height={40} />
         <Description>
           {description}
         </Description>
       </Content>
       {autoHidden &&
         <ProgressBar
-          color={theme.colors.progressBar}
-          width={theme.colors.progressBarWidth}
+          color={colors.progressBar}
+          width={colors.progressBarWidth}
           value={barValue} max={100}
         />
       }
@@ -119,12 +112,14 @@ ToastItem.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string.isRequired,
-  position: PropTypes.string,
   description: PropTypes.string,
-  margins: PropTypes.string,
+  // position: PropTypes.string,
+  // margins: PropTypes.string,
   autoHidden: PropTypes.bool,
   duration: PropTypes.string,
-  index: PropTypes.number
+  animation: PropTypes.string,
+  index: PropTypes.number,
+  deleteToast: PropTypes.func
 };
 
 ToastItem.displayName = "ToastItem";

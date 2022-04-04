@@ -5,28 +5,51 @@ const WIDTH = "26vw";
 const HEIGTH = "19vh";
 const SCALE = 0.98;
 
-const slidein = keyframes`
+const opacity = keyframes`
   0% {
-    opacity: 0
+    opacity: 0;
   }
   100% {
-    opacity: 1
+    opacity: 1;
   }
 `;
 
-export const Container = styled.div`
+const transform = keyframes`
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
+const getAnimation = (props) => {
+  switch (props.animation) {
+    case "opacity":
+      return opacity;
+    case "transform":
+      return transform;
+  }
+}
+
+export const Container = styled.li`
   align-items: center;
-  animation: ${slidein} 0.5s ease 1;
+  animation: ${props => getAnimation(props)} 0.5s ease 1;
   background-color: ${props => props.color ? props.color : theme.colors.defaultToastBg};
   border: 1px solid ${props => props.color ? props.color : "black"};
   border-radius: ${({ theme }) => theme.borderRadius[1]}px;
+  // bottom: ${props => props.position && props.position.bottom};  
   color: ${({ theme }) => theme.colors.text};
-  display: flex; 
+  display: flex;
   flex-direction: column;
   height: ${HEIGTH};
   justify-content: space-around;
-  margin: ${props => props.margins ? props.margins : theme.spacing[3]}px;
+  // left: ${props => props.position && props.position.left};
+  margin: ${theme.spacing[3]}px;
   padding: ${({ theme }) => theme.spacing[3]}px;
+  position: ${props => props.position ? "static" : "absolute"};
+  // right: ${props => props.position && props.position.right};
+  // top: ${props => props.position && props.position.top};
   transition: 0.5s all ease;
   width: ${WIDTH};
   z-index: 2;

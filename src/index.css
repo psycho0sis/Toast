@@ -23,6 +23,7 @@
     font-size: 100%;
     line-height: 1;
     font-size: 14px;
+    overflow: hidden;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -47,10 +48,12 @@
   height: 100vh;
 }
 
-.visible {
-  opacity: 1;
+.opacity {
+  opacity: 0;
+
 }
 
-.hidden {
-  opacity: 0;
+.transform {
+  transform: scale(0);
 }
+

@@ -7,6 +7,7 @@ import { ToastsList } from '@/components/ToastsList';
 
 import { ToastsProvider } from '@/context';
 import Singleton from '@/singleton';
+import { TOAST_TYPE } from "@/constants/toastType";
 import { useStateCallback } from '@/hooks/useStateCallback';
 import { theme } from "@/theme";
 
@@ -28,12 +29,15 @@ export const App = () => {
     type: "info",
     title: "Example",
     position: "top-left",
-    color: theme.colors.defaultToastBg,
+    color: theme.colors[TOAST_TYPE.success],
     description: "Example description",  
     margins: "10",
     duration: "3000",
+    animation: "transform",
     autoHidden: false
   })
+
+  const { position, margins } = options;
 
   const createNewToast = useCallback((e) => {
     e.preventDefault();
@@ -41,6 +45,7 @@ export const App = () => {
   }, [options]);
 
   return (
+    
     <ThemeProvider theme={theme}>
       <ToastsProvider value={value}>
         <Container>
@@ -53,7 +58,7 @@ export const App = () => {
             createNewToast={createNewToast}
           />
           <Portal>
-            <ToastsList position={options.position}/>
+            <ToastsList position={position} margins={margins} />
           </Portal>
         </Container>
       </ToastsProvider>

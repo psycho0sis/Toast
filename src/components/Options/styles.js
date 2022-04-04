@@ -27,7 +27,7 @@ export const OptionsItem = styled.li`
   align-items: center;
   display: flex;
   gap: ${({ theme }) => theme.spacing[3]}px;
-  padding: ${({ theme }) => theme.spacing[3]}px;
+  padding: ${({ theme }) => theme.spacing[2]}px;
   width: ${WIDTH};
 `
 export const Select = styled.select`

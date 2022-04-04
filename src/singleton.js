@@ -17,15 +17,9 @@ export default class Singleton {
       return;
     }
     this.toasts.push(toast);
-
-    console.log("create", this.toasts)
   }
 
   deleteToast(toasIndex) {
-    
-    // this.toasts.splice(toasIndex, 1)
-    // console.log("this toasts", this.toasts)
-    // return this.toasts
     this.toasts = this.toasts.filter((toast, i) => i !== toasIndex);
   }
 
