@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 export const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
   const [container] = useState(() => {
@@ -12,8 +12,8 @@ export const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
 
     return () => {
       document.body.removeChild(container);
-    }
-  }, [])
+    };
+  }, []);
 
   return createPortal(children, container);
 };

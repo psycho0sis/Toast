@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import { Toast } from '../Toast/Toast';
 
 import { TOAST_POSITION } from '../../constants/toastPosition';
-import { ToastsContainer } from "./toastsListsStyles"
+import { ToastsContainer } from './toastsListsStyles';
 
 export const ToastsList = ({ toasts, position, margins }) => {
   const [list, setList] = useState([...toasts]);
 
-  console.log(toasts)
   const handleDeleteItem = (id) => {
     const listItemIndex = list.findIndex((el) => el.id === id);
     const toastListItemIndex = toasts.findIndex((el) => el.id === id);
@@ -25,19 +24,19 @@ export const ToastsList = ({ toasts, position, margins }) => {
       position={TOAST_POSITION[position]}
       margins={margins}
     >
-      {toasts.map(toast => (
+      {toasts.map((toast) => (
         <Toast
           key={toast.id}
-          handleDeleteItem={handleDeleteItem}
           toast={toast}
+          handleDeleteItem={handleDeleteItem}
         />
       ))}
     </ToastsContainer>
   );
-}
+};
 
 ToastsList.propTypes = {
   position: PropTypes.string,
   margins: PropTypes.string,
-  toasts: PropTypes.arrayOf(Toast.propTypes.toast),
+  toasts: PropTypes.arrayOf(Toast.propTypes.toast)
 };

@@ -13,20 +13,20 @@ import {
   Form,
   Input,
   InputCheckbox
-} from "./styles"
+} from './styles';
 
 export const Options = ({ options, setOptions, createNewToast }) => {
   const { autoHidden, type, title, description } = options;
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setOptions(options => {
+    setOptions((options) => {
       return {
         ...options,
-        [name]: type === "checkbox" ? checked : value
-      }
-    })
-  }
+        [name]: type === 'checkbox' ? checked : value
+      };
+    });
+  };
 
   return (
     <Form>
@@ -34,20 +34,20 @@ export const Options = ({ options, setOptions, createNewToast }) => {
         <OptionsItem>
           <Label>Title</Label>
           <Input
-            type="text"
-            placeholder="Title"
+            type='text'
+            placeholder='Title'
             onChange={handleChange}
-            name="title"
+            name='title'
             value={title}
           />
         </OptionsItem>
         <OptionsItem>
           <Label>Description</Label>
           <Input
-            type="text"
-            placeholder="Description"
+            type='text'
+            placeholder='Description'
             onChange={handleChange}
-            name="description"
+            name='description'
             value={description}
           />
         </OptionsItem>
@@ -70,14 +70,17 @@ export const Options = ({ options, setOptions, createNewToast }) => {
         <OptionsItem>
           <Label>Autohidden</Label>
           <InputCheckbox
-            type="checkbox"
+            type='checkbox'
             checked={autoHidden}
             onChange={handleChange}
-            name="autoHidden"
+            name='autoHidden'
           />
         </OptionsItem>
       </ListOfOptions>
-      <CreateToastBtn createNewToast={createNewToast} type={type} />
+      <CreateToastBtn
+        createNewToast={createNewToast}
+        type={type}
+      />
     </Form>
   );
 };

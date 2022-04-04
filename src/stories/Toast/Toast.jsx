@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { ProgressBar } from '../../components/ProgressBar';
 
-import { ICONS } from "../../constants/icons";
-import { theme } from "../../theme";
+import { ICONS } from '../../constants/icons';
+import { theme } from '../../theme';
 
 import {
   Container,
@@ -14,26 +14,30 @@ import {
   Content,
   Button,
   Image
-} from "./toastStyles.js";
+} from './toastStyles.js';
 
-import deleteImg from "../../assets/delete.svg";
+import deleteImg from '../../assets/delete.svg';
 
-export const Toast = ({toast: { key, type, title, description, animation, color, textColor, duration, autoHidden }, handleDeleteItem }) => {
+export const Toast = ({
+  toast: { key, type, title, description, animation, color, textColor, duration, autoHidden },
+  handleDeleteItem
+}) => {
   const [barValue, setBarValue] = useState(0);
-  
+  const { progressBar, progressBarWidth } = theme.colors;
+
   const onhandleDeleteItem = (key) => () => handleDeleteItem(key);
 
   useEffect(() => {
     if (autoHidden) {
       const interval = setInterval(() => {
-        setBarValue(oldValue => {
+        setBarValue((oldValue) => {
           const newValue = oldValue + 1;
           if (newValue === 100) {
             clearInterval(interval);
           }
           return newValue;
         });
-      }, (+duration / 100));
+      }, +duration / 100);
       return () => clearInterval(interval);
     }
   }, []);
@@ -42,36 +46,39 @@ export const Toast = ({toast: { key, type, title, description, animation, color,
     <Container
       animation={animation}
       color={color}
-      type={type}
-    > 
-      <TitleContainer className="titleContainer">
-        <Title textColor={textColor}>
+      type={type}>
+      <TitleContainer>
+        <Title textColor={textColor} >
           {title}
         </Title>
-        <Button onClick={onhandleDeleteItem(key)}
-        >
-          {!autoHidden &&
+        <Button onClick={onhandleDeleteItem(key)}>
+          {!autoHidden
+            &&
             <Image
               src={deleteImg}
               width={20}
               height={20}
-            />
-          }
-        </Button> 
+            />}
+        </Button>
       </TitleContainer>
       <Content>
-        <Image src={ICONS[type] || ICONS["error"]} width={40} height={40} />
+        <Image
+          src={ICONS[type] || ICONS['error']}
+          width={40}
+          height={40}
+        />
         <Description textColor={textColor}>
           {description}
         </Description>
       </Content>
-      {autoHidden &&
+      {autoHidden && (
         <ProgressBar
-          color={theme.colors.progressBar}
-          width={theme.colors.progressBarWidth}
-          value={barValue} max={100}
+          color={progressBar}
+          width={progressBarWidth}
+          value={barValue}
+          max={100}
         />
-      }
+      )}
     </Container>
   );
 };
@@ -86,7 +93,7 @@ Toast.propTypes = {
     duration: PropTypes.string,
     color: PropTypes.string,
     textColor: PropTypes.string,
-    autoHidden: PropTypes.bool,
+    autoHidden: PropTypes.bool
   }),
-  handleDeleteItem: PropTypes.func,
-}
+  handleDeleteItem: PropTypes.func
+};

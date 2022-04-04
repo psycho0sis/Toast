@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   progress {
@@ -6,7 +6,7 @@ export const Container = styled.div`
   }
 
   progress[value] {
-    width: ${props => props.width};
+    width: ${(props) => props.width};
 
     -webkit-appearance: none;
     appearance: none;
@@ -16,10 +16,10 @@ export const Container = styled.div`
     height: 10px;
     border-radius: 20px;
     background-color: #eee;
-  }  
+  }
 
   progress[value]::-webkit-progress-value {
-    background-color: ${props => props.color};
+    background-color: ${(props) => props.color};
     border-radius: 20px;
     height: 10px;
   }
