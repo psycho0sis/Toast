@@ -1,5 +1,5 @@
-import styled, {keyframes} from 'styled-components';
-import { theme } from '@/theme';
+import styled, { keyframes } from 'styled-components';
+import { theme } from '../../theme';
 
 const WIDTH = "26vw";
 const HEIGTH = "19vh";

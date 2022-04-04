@@ -31,9 +31,9 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
   const { toasts, setToasts } = useContext(ToastsContext);
   const ref = useRef(null);
   const customTitle = fistLetterCapitalize(title);
-  const { colors } = theme;
+  const { progressBar, progressBarWidth } = theme.colors;
 
-  const deleteToast = (index) => () => {
+  const onDeleteToast = (index) => () => {
     if (!autoHidden) {
       singleton.deleteToast(index);
       setToasts(singleton.findAllToasts());
@@ -71,8 +71,6 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
       animation={animation}
       color={color}
       index={index}
-      // margins={margins}
-      // position={position}
       type={type}
       ref={ref}
     > 
@@ -80,7 +78,7 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
         <Title>
           {customTitle}
         </Title>
-        <Button onClick={deleteToast(index)}>
+        <Button onClick={onDeleteToast(index)}>
           {!autoHidden &&
             <Image
               src={deleteImg}
@@ -92,15 +90,15 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
         </Button>
       </TitleContainer>
       <Content>
-        <Image src={ICONS[type]} width={40}  height={40} />
+        <Image src={ICONS[type]} width={40} height={40} />
         <Description>
           {description}
         </Description>
       </Content>
       {autoHidden &&
         <ProgressBar
-          color={colors.progressBar}
-          width={colors.progressBarWidth}
+          color={progressBar}
+          width={progressBarWidth}
           value={barValue} max={100}
         />
       }
@@ -113,8 +111,6 @@ ToastItem.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string.isRequired,
   description: PropTypes.string,
-  // position: PropTypes.string,
-  // margins: PropTypes.string,
   autoHidden: PropTypes.bool,
   duration: PropTypes.string,
   animation: PropTypes.string,

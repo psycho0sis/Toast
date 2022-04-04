@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import Singleton from '@/singleton';
+import Singleton from '../singleton';
 
 const singleton = new Singleton();
 

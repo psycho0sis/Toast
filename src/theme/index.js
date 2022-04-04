@@ -1,4 +1,4 @@
-import { TOAST_TYPE } from "@/constants/toastType";
+import { TOAST_TYPE } from "../constants/toastType";
 
 export const theme = {
   colors: {

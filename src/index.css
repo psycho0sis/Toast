@@ -57,3 +57,6 @@
   transform: scale(0);
 }
 
+.toastContainer {
+  background-color: aqua;
+}

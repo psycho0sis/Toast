@@ -23,7 +23,6 @@ export const ToastsList = ({ position, margins }) => {
 };
 
 ToastsList.propTypes = {
-  children: PropTypes.element,
   position: PropTypes.string,
   margins: PropTypes.string
 }
