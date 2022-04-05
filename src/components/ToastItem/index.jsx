@@ -26,85 +26,91 @@ import deleteImg from '@/assets/delete.svg';
 const singleton = new Singleton();
 
 export const ToastItem = memo(({ color, title, type, description, duration, autoHidden, animation, index }) => {
-    const [barValue, setBarValue] = useState(0);
-    const { toasts, setToasts } = useContext(ToastsContext);
-    const ref = useRef(null);
-    const customTitle = fistLetterCapitalize(title);
-    const { progressBar, progressBarWidth } = theme.colors;
+  const { progressBar, progressBarWidth } = theme.colors;
+  const [barValue, setBarValue] = useState(0);
+  const { toasts, setToasts } = useContext(ToastsContext);
+  const ref = useRef(null);
+  const customTitle = fistLetterCapitalize(title);
 
-    const onDeleteToast = (index) => () => {
-      if (!autoHidden) {
-        singleton.deleteToast(index);
+  const onDeleteToast = (index) => () => {
+    if (!autoHidden) {
+      singleton.deleteToast(index);
+      setToasts(singleton.findAllToasts());
+    }
+  };
+
+  useEffect(() => {
+    if (autoHidden) {
+      const interval = setInterval(() => {
+        setBarValue((oldValue) => {
+          const newValue = oldValue + 1;
+          if (newValue === 100) {
+            clearInterval(interval);
+            singleton.deleteToast(index);
+          }
+          return newValue;
+        });
+      }, +duration / 100);
+      return () => clearInterval(interval);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (autoHidden) {
+      setTimeout(() => {
+        singleton.deleteAllToasts();
         setToasts(singleton.findAllToasts());
-      }
-    };
+      }, +duration + 1000);
+    }
+  }, [toasts]);
 
-    useEffect(() => {
-      if (autoHidden) {
-        const interval = setInterval(() => {
-          setBarValue((oldValue) => {
-            const newValue = oldValue + 1;
-            if (newValue === 100) {
-              clearInterval(interval);
-              singleton.deleteToast(index);
-            }
-            return newValue;
-          });
-        }, +duration / 100);
-        return () => clearInterval(interval);
-      }
-    }, []);
-
-    useEffect(() => {
-      if (autoHidden) {
-        setTimeout(() => {
-          singleton.deleteAllToasts();
-          setToasts(singleton.findAllToasts());
-        }, +duration + 1000);
-      }
-    }, [toasts]);
-
-    return (
-      <Container 
-        animation={animation} 
-        color={color} 
-        index={index} 
-        type={type} 
-        ref={ref}
-      >
-        <TitleContainer>
-          <Title>
-            {customTitle}
-          </Title>
-          <Button onClick={onDeleteToast(index)}>
-            {!autoHidden
-              &&
-              <Image 
-                src={deleteImg} 
-                width={20} 
-                height={20} 
-              />}
-          </Button>
-        </TitleContainer>
-        <Content>
-          <Image 
-            src={ICONS[type]} 
-            width={40} 
-            height={40}
-          />
-          <Description>
-            {description}
-          </Description>
-        </Content>
-        {autoHidden && (
-          <ProgressBar 
-            color={progressBar} 
-            width={progressBarWidth} 
-            value={barValue} 
-            max={100}
-          />
-        )}
-      </Container>
+  const dragEndHandler = (id) => () => {
+    onDeleteToast(id)();
+  }
+  
+  return (
+    <Container 
+      animation={animation} 
+      color={color} 
+      index={index} 
+      type={type} 
+      ref={ref}
+      draggable={true}
+      onDragEnd={dragEndHandler(index)}
+    >
+      <TitleContainer>
+        <Title>
+          {customTitle}
+        </Title>
+        <Button onClick={onDeleteToast(index)}>
+          {!autoHidden
+            &&
+            <Image 
+              src={deleteImg} 
+              width={20} 
+              height={20} 
+            />}
+        </Button>
+      </TitleContainer>
+      <Content>
+        <Image 
+          src={ICONS[type]} 
+          width={40} 
+          height={40}
+        />
+        <Description>
+          {description}
+        </Description>
+      </Content>
+      {autoHidden && (
+        <ProgressBar 
+          color={progressBar} 
+          width={progressBarWidth} 
+          value={barValue} 
+          max={100}
+        />
+      )}
+    </Container>
     );
   }
 );

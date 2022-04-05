@@ -4,7 +4,8 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-controls",
-    "@storybook/addon-postcss"
+    "@storybook/addon-postcss",
+    "@storybook/addon-actions",
   ],
   framework: "@storybook/react",
   babel: async (options) => ({

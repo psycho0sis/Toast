@@ -27,6 +27,7 @@ export const ToastsList = ({ toasts, position, margins }) => {
       {toasts.map((toast) => (
         <Toast
           key={toast.id}
+          index={toast.id}
           toast={toast}
           handleDeleteItem={handleDeleteItem}
         />

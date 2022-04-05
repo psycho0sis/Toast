@@ -18,14 +18,13 @@ import {
 
 import deleteImg from '../../assets/delete.svg';
 
-export const Toast = ({
-  toast: { key, type, title, description, animation, color, textColor, duration, autoHidden },
-  handleDeleteItem
-}) => {
-  const [barValue, setBarValue] = useState(0);
+export const Toast = ({ toast, handleDeleteItem, index }) => {
+  const { type, title, description, animation, color, textColor, duration, autoHidden } = toast;
   const { progressBar, progressBarWidth } = theme.colors;
+  const [barValue, setBarValue] = useState(0);
 
-  const onhandleDeleteItem = (key) => () => handleDeleteItem(key);
+  const onhandleDeleteItem = (index) => () => handleDeleteItem(index);
+  const dragEndHandler = (index) => () => handleDeleteItem(index);
 
   useEffect(() => {
     if (autoHidden) {
@@ -40,18 +39,21 @@ export const Toast = ({
       }, +duration / 100);
       return () => clearInterval(interval);
     }
-  }, []);
+  }, []); 
 
   return (
     <Container
+      draggable={true}
       animation={animation}
       color={color}
-      type={type}>
+      type={type}
+      onDragEnd={dragEndHandler(index)}
+    >
       <TitleContainer>
         <Title textColor={textColor} >
           {title}
         </Title>
-        <Button onClick={onhandleDeleteItem(key)}>
+        <Button onClick={onhandleDeleteItem(index)}>
           {!autoHidden
             &&
             <Image
@@ -85,7 +87,6 @@ export const Toast = ({
 
 Toast.propTypes = {
   toast: PropTypes.shape({
-    key: PropTypes.number,
     type: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
@@ -95,5 +96,6 @@ Toast.propTypes = {
     textColor: PropTypes.string,
     autoHidden: PropTypes.bool
   }),
-  handleDeleteItem: PropTypes.func
+  index: PropTypes.number,
+  handleDeleteItem: PropTypes.func,
 };

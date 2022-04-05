@@ -61,6 +61,7 @@ export const Container = styled.li`
   border: 1px solid ${(props) => (props.color ? props.color : 'black')};
   border-radius: ${({ theme }) => theme.borderRadius[1]}px;
   color: ${({ theme }) => theme.colors.text};
+  cursor: grab;
   display: flex;
   flex-direction: column;
   height: ${HEIGTH};

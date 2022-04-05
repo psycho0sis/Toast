@@ -17,6 +17,7 @@ import { Container, Title } from './styles';
 const singleton = new Singleton();
 
 export const App = () => {
+  const { position, margins } = options;
   const [toasts, setToasts] = useStateCallback(() => singleton.findAllToasts());
   const value = useMemo(() => ({ toasts, setToasts }), [toasts]);
 
@@ -31,8 +32,6 @@ export const App = () => {
     animation: 'transform',
     autoHidden: false
   });
-
-  const { position, margins } = options;
 
   const createNewToast = useCallback(
     (e) => {
