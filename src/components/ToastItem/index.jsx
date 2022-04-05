@@ -8,7 +8,6 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { ICONS } from '@/constants/icons';
 import ToastsContext from '@/context';
 import Singleton from '@/utils/singleton';
-import { addClass } from '@/utils/addClass';
 import { fistLetterCapitalize } from '@/utils/fistLetterCapitalize';
 import { theme } from '@/theme';
 
@@ -46,7 +45,6 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
           setBarValue((oldValue) => {
             const newValue = oldValue + 1;
             if (newValue === 100) {
-              addClass(ref.current, animation);
               clearInterval(interval);
               singleton.deleteToast(index);
             }

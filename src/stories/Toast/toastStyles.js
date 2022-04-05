@@ -23,14 +23,37 @@ const transform = keyframes`
   }
 `;
 
+
+const marginLeft = keyframes`
+  0% {
+    margin-left: -250px;
+  }
+  100% {
+    margin-left: ${theme.spacing[3]}px;
+  }
+`;
+
+const marginTop = keyframes`
+  0% {
+    margin-top: -250px;
+  }
+  100% {
+    margin-top: ${theme.spacing[3]}px;
+  }
+`;
+
 const getAnimation = (props) => {
   switch (props.animation) {
-    case "opacity":
+    case 'opacity':
       return opacity;
-    case "transform":
+    case 'transform':
       return transform;
+    case "margin-left":
+      return marginLeft;
+    case "margin-top":
+      return marginTop;
   }
-}
+};
 
 export const Container = styled.li`
   align-items: center;

@@ -15,7 +15,7 @@ Error.args = {
     type: 'error',
     title: 'Error',
     description: 'Error example description',
-    animation: 'transform',
+    animation: 'margin-top',
     color: theme.colors['error'],
     textColor: 'white',
     autoHidden: false
@@ -57,7 +57,7 @@ Warning.args = {
     type: 'warning',
     title: 'Warning',
     description: 'Warning example description',
-    animation: 'opacity',
+    animation: 'margin-left',
     color: theme.colors['warning'],
     textColor: 'white',
     autoHidden: true

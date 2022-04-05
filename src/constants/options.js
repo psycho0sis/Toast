@@ -97,7 +97,11 @@ export const OPTIONS = [
       value2: 'transform',
       content_2: 'Transform',
       value3: 'opacity',
-      content_3: 'Opacity'
+      content_3: 'Opacity',
+      value4: 'margin-left',
+      content_4: 'Margin-left',
+      value5: 'margin-top',
+      content_5: 'Margin-top'
     }
   }
 ];
