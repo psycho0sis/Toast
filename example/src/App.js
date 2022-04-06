@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { ToastsList } from "toast/src/stories/ToastsList/ToastsList";
-import { Toast } from "toast/src/stories/Toast/Toast";
+import { ToastsList } from "toaster";
+// import { Toast } from "toast";
 
 function App() {
   const [ toasts, setToasts ] = useState([

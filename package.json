@@ -1,10 +1,12 @@
 {
-  "name": "toast",
+  "name": "toaster",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:ex": "cd example && npm run start",
     "start": "rollup -c rollup.config.js -w",
+    "deploy": "gh-pages -d build",
     "build": "rollup -c -o build/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
@@ -17,6 +19,11 @@
     "type": "git",
     "url": "git+https://github.com/psycho0sis/Toast.git"
   },
+    "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
