@@ -1,53 +1,73 @@
-import { useState } from "react";
+import React, { useCallback, useMemo } from 'react';
 
-import { ToastsList } from "toaster";
-// import { Toast } from "toast";
+import {
+  ToastsList,
+  CreateToastBtn,
+  ToastsProvider,
+  Singleton,
+  useStateCallback,
+  TOASTS_CASES
+} from "toaster-psycho0sis";
 
-function App() {
-  const [ toasts, setToasts ] = useState([
-    {
-      id: 1,
-      title: "Error",
-      description: "Error example description",
-      animation: "opacity",
-      color: "red",
-      textColor: "white",
-      duration: "3000", 
-      autoHidden: false
+const singleton = new Singleton();
+
+const App = () => {
+  const [toasts, setToasts] = useStateCallback(() => singleton.findAllToasts());
+  const value = useMemo(() => ({ toasts, setToasts }), [toasts, setToasts]);
+  
+  const createNewToast = useCallback(
+    (type) => () => {
+      switch (type) {
+          case "success":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.successToast],
+            () => singleton.createToast(TOASTS_CASES.successToast)
+          );
+          return;
+        case "warning":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.warningToast],
+            () => singleton.createToast(TOASTS_CASES.warningToast)
+          );
+          return;
+        case "error":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.errorToast],
+            () => singleton.createToast(TOASTS_CASES.errorToast)
+          );
+          return;
+        case "info":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.infoToast],
+            () => singleton.createToast(TOASTS_CASES.infoToast)
+          );
+          return;
+        default:
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.infoToast],
+            () => singleton.createToast(TOASTS_CASES.infoToast)
+          );
+          return;
+      }
     },
-    {id: 2,
-      title: "Error",
-      description: "Error example description",
-      animation: "opacity",
-      color: "red",
-      textColor: "white",
-      duration: "3000", 
-      autoHidden: false
-    },
-    {id: 3,
-      title: "Error",
-      description: "Error example description",
-      animation: "opacity",
-      color: "red",
-      textColor: "white",
-      duration: "3000", 
-      autoHidden: false
-    },
-  ])
+    [setToasts]
+  );
 
   return (
-    <div className="App">
-      <ToastsList toasts={toasts} position="bottom-left" margins="20px" />
-        {/* {toasts.map(toast => (
-        <Toast
-          key={toast.id}
-          handleDeleteItem={handleDeleteItem}
-          toast={toast}
-        />
-      ))}
-      </ToastsList> */}
-    </div>
-  );
-}
+    <ToastsProvider value={value}>
+      <div>
+        <CreateToastBtn createNewToast={createNewToast} type="error" text="Add error toast"/>
+        <CreateToastBtn createNewToast={createNewToast} type="info" text="Add info toast" />
+        <CreateToastBtn createNewToast={createNewToast} type="success" text="Add success toast"/>
+        <CreateToastBtn createNewToast={createNewToast} type="warning" text="Add warning toast" />
+      </div>
+      <ToastsList position="top-right" margins="20px"/>
+    </ToastsProvider>
+    
+  )
+};
+
 
 export default App;
+
+
