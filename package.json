@@ -1,13 +1,14 @@
 {
-  "name": "toaster",
-  "version": "1.0.0",
+  "name": "toaster-psycho0sis",
+  "version": "1.0.7",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "start:ex": "cd example && npm run start",
     "start": "rollup -c rollup.config.js -w",
-    "deploy": "gh-pages -d build",
-    "build": "rollup -c -o build/bundle.js",
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -19,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/psycho0sis/Toast.git"
   },
-    "browserslist": [
+  "browserslist": [
     ">0.2%",
     "not dead",
     "not op_mini all"
@@ -30,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/psycho0sis/Toast/issues"
   },
-  "homepage": "https://github.com/psycho0sis/Toast#readme",
+  "homepage": "https://github.com/psycho0sis/Toast",
   "dependencies": {
     "babel-eslint": "^10.1.0",
     "prop-types": "^15.8.1",
@@ -64,6 +65,7 @@
     "babel-plugin-react-css-modules": "^5.2.6",
     "babel-plugin-styled-components": "^2.0.6",
     "babel-preset-react-app": "^10.0.1",
+    "dotenv-webpack": "^7.1.0",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-better-styled-components": "^1.1.2",

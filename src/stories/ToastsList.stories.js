@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import { ToastsList } from './ToastsList/ToastsList';
-import * as ToastStories from './Toast.stories';
+import { ToastsList } from '@/components/ToastsList';
+import { CreateToastBtn } from '@/components/CreateToastBtn';
+import { ToastsProvider } from '@/context';
+import Singleton from '@/utils/singleton';
+import { useStateCallback } from '@/hooks/useStateCallback'
+import { TOASTS_CASES } from '@/constants/toastsCases';
 
 export default {
   title: 'ToastsList',
@@ -21,52 +25,61 @@ export default {
   }
 };
 
-const Template = (args) => <ToastsList {...args} />;
+const singleton = new Singleton();
 
-export const ErrorList = Template.bind({});
+const Template = (args) => {
+  const [toasts, setToasts] = useStateCallback(() => singleton.findAllToasts());
+  const value = useMemo(() => ({ toasts, setToasts }), [toasts]);
+  
+  const createNewToast = useCallback(
+    (type) => () => {
+      switch (type) {
+          case "success":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.successToast],
+            () => singleton.createToast(TOASTS_CASES.successToast)
+          );
+          return;
+        case "warning":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.warningToast],
+            () => singleton.createToast(TOASTS_CASES.warningToast)
+          );
+          return;
+        case "error":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.errorToast],
+            () => singleton.createToast(TOASTS_CASES.errorToast)
+          );
+          return;
+        case "info":
+          setToasts(
+            (prevToasts) => [...prevToasts, TOASTS_CASES.infoToast],
+            () => singleton.createToast(TOASTS_CASES.infoToast)
+          );
+          return;
+      }
+    },
+    []
+  );
 
-ErrorList.args = {
-  toasts: [
-    { ...ToastStories.Error.args.toast, id: '1' },
-    { ...ToastStories.Error.args.toast, id: '2' },
-    { ...ToastStories.Error.args.toast, id: '3' }
-  ],
+  return (
+    <ToastsProvider value={value}>
+      <div>
+        <CreateToastBtn createNewToast={createNewToast} type="error" text="Add error toast"/>
+        <CreateToastBtn createNewToast={createNewToast} type="info" text="Add info toast" />
+        <CreateToastBtn createNewToast={createNewToast} type="success" text="Add success toast"/>
+        <CreateToastBtn createNewToast={createNewToast} type="warning" text="Add warning toast" />
+      </div>
+      <ToastsList {...args} />
+    </ToastsProvider>
+    
+  )
+};
+
+export const ToastsListExample = Template.bind({});
+
+ToastsListExample.args = {
   position: 'top-left',
   margins: '10px'
-};
-
-export const InfoList = Template.bind({});
-
-InfoList.args = {
-  toasts: [
-    { ...ToastStories.Info.args.toast, id: '1' },
-    { ...ToastStories.Info.args.toast, id: '2' },
-    { ...ToastStories.Info.args.toast, id: '3' }
-  ],
-  position: 'top-right',
-  margins: '20px'
-};
-
-export const WarningList = Template.bind({});
-
-WarningList.args = {
-  toasts: [
-    { ...ToastStories.Warning.args.toast, id: '1' },
-    { ...ToastStories.Warning.args.toast, id: '2' },
-    { ...ToastStories.Warning.args.toast, id: '3' }
-  ],
-  position: 'bottom-right',
-  margins: '30px'
-};
-
-export const SuccessList = Template.bind({});
-
-SuccessList.args = {
-  toasts: [
-    { ...ToastStories.Success.args.toast, id: '1' },
-    { ...ToastStories.Success.args.toast, id: '2' },
-    { ...ToastStories.Success.args.toast, id: '3' }
-  ],
-  position: 'bottom-left',
-  margins: '40px'
 };

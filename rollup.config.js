@@ -9,10 +9,12 @@ import serve from "rollup-plugin-serve";
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 
+const packageJson = require("./package.json");
 const root = path.resolve(__dirname);
 
 export default {
-  input: "src/index.jsx",
+  input: "src/index.js",
+  external: ["react", "react-dom"],
   plugins: [
     babel({
       exclude: "node_modules/**",
@@ -50,10 +52,16 @@ export default {
     }),
     livereload({ watch: "dist" }),
   ],
-  output: {
-    file: "dist/bundle.js",
-    format: "iife",
-    sourcemap: true,
-    assetFileNames: "[name]-[hash][extname]",
-  },
+    output: [
+    {
+      file: packageJson.main,
+      format: "cjs",
+      sourcemap: true
+    },
+    {
+      file: packageJson.module,
+      format: "esm",
+      sourcemap: true
+    }
+  ],
 };

@@ -6,7 +6,8 @@ const singleton = new Singleton();
 
 const ToastsContext = createContext({
   toasts: singleton.findAllToasts(),
-  setToasts: () => {}
+  setToasts: () => {},
+  addToast: () => {}
 });
 
 export const ToastsProvider = ToastsContext.Provider;

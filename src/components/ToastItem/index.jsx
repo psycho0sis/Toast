@@ -1,5 +1,3 @@
-import '@/index.css';
-
 import React, { memo, useContext, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,7 +6,6 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { ICONS } from '@/constants/icons';
 import ToastsContext from '@/context';
 import Singleton from '@/utils/singleton';
-import { fistLetterCapitalize } from '@/utils/fistLetterCapitalize';
 import { theme } from '@/theme';
 
 import {
@@ -25,12 +22,12 @@ import deleteImg from '@/assets/delete.svg';
 
 const singleton = new Singleton();
 
-export const ToastItem = memo(({ color, title, type, description, duration, autoHidden, animation, index }) => {
+export const ToastItem = memo(({ toast, index }) => {
+  const { color, title, type, description, duration, autoHidden, animation } = toast;
   const { progressBar, progressBarWidth } = theme.colors;
   const [barValue, setBarValue] = useState(0);
   const { toasts, setToasts } = useContext(ToastsContext);
   const ref = useRef(null);
-  const customTitle = fistLetterCapitalize(title);
 
   const onDeleteToast = (index) => () => {
     if (!autoHidden) {
@@ -80,7 +77,7 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
     >
       <TitleContainer>
         <Title>
-          {customTitle}
+          {title}
         </Title>
         <Button onClick={onDeleteToast(index)}>
           {!autoHidden
@@ -116,13 +113,16 @@ export const ToastItem = memo(({ color, title, type, description, duration, auto
 );
 
 ToastItem.propTypes = {
-  color: PropTypes.string,
-  title: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  autoHidden: PropTypes.bool,
-  duration: PropTypes.string,
-  animation: PropTypes.string,
+  toast: PropTypes.shape({
+    type: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    animation: PropTypes.string,
+    duration: PropTypes.string,
+    color: PropTypes.string,
+    textColor: PropTypes.string,
+    autoHidden: PropTypes.bool
+  }),
   index: PropTypes.number,
   deleteToast: PropTypes.func
 };

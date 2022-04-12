@@ -1,14 +1,15 @@
 import React from 'react';
-import { Toast } from './Toast/Toast';
 
-import { theme } from '../theme';
+import { ToastItem } from '@/components/ToastItem'
+
+import { theme } from '@/theme';
 
 export default {
   title: 'toast-lib',
-  component: Toast
+  component: ToastItem
 };
 
-export const Error = (args) => <Toast {...args} />;
+export const Error = (args) => <ToastItem {...args} />;
 
 Error.args = {
   toast: {
@@ -22,7 +23,7 @@ Error.args = {
   }
 };
 
-export const Info = (args) => <Toast {...args} />;
+export const Info = (args) => <ToastItem {...args} />;
 
 Info.args = {
   toast: {
@@ -36,7 +37,7 @@ Info.args = {
   }
 };
 
-export const Success = (args) => <Toast {...args} />;
+export const Success = (args) => <ToastItem {...args} />;
 
 Success.args = {
   toast: {
@@ -50,7 +51,7 @@ Success.args = {
   }
 };
 
-export const Warning = (args) => <Toast {...args} />;
+export const Warning = (args) => <ToastItem {...args} />;
 
 Warning.args = {
   toast: {

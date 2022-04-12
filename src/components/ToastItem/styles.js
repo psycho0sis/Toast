@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { theme } from '@/theme';
+import { theme } from '../../theme';
 
 const WIDTH = '300px';
 const HEIGTH = '120px';
@@ -59,31 +59,32 @@ export const Container = styled.li`
   animation: ${(props) => getAnimation(props)} 0.5s ease 1;
   background-color: ${(props) => (props.color ? props.color : theme.colors.defaultToastBg)};
   border: 1px solid ${(props) => (props.color ? props.color : 'black')};
-  border-radius: ${({ theme }) => theme.borderRadius[1]}px;
-  color: ${({ theme }) => theme.colors.text};
+  border-radius: ${theme.borderRadius[1]}px;
+  color: ${theme.colors.text};
   cursor: grab;
   display: flex;
   flex-direction: column;
   height: ${HEIGTH};
   justify-content: space-around;
   margin: ${theme.spacing[3]}px;
-  padding: ${({ theme }) => theme.spacing[3]}px;
-  position: ${(props) => (props.position ? 'static' : 'absolute')};
+  padding: ${theme.spacing[3]}px;
+  // position: ${(props) => (props.position ? 'static' : 'absolute')};
   transition: 0.5s all ease;
   width: ${WIDTH};
   z-index: 2;
 `;
 
-Container.defaultProps = {
-  color: 'white',
-  position: {
-    top: 'initial',
-    left: 0,
-    right: 'initial',
-    bottom: 0
-  },
-  margins: '10px'
-};
+// Container.defaultProps = {
+//   color: 'white',
+//   position: {
+//     top: 'initial',
+//     left: 0,
+//     right: 'initial',
+//     bottom: 0
+//   },
+//   margins: '10px'
+// };
+
 
 export const Image = styled.img`
   height: ${(props) => props.height}px;
@@ -98,16 +99,16 @@ export const Image = styled.img`
 export const Content = styled.div`
   align-items: center;
   display: flex;
-  gap: 0 ${({ theme }) => theme.spacing[3]}px;
+  gap: 0 ${theme.spacing[3]}px;
   width: 100%;
 `;
 
 export const Title = styled.h3`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${theme.colors.text};
 `;
 
 export const Description = styled.p`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${theme.colors.text};
 `;
 
 export const Button = styled.button`

@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import { CreateToastButton } from './styles';
 
-export const CreateToastBtn = ({ createNewToast, type }) => {
+export const CreateToastBtn = ({ createNewToast, type, text}) => {
   return (
     <CreateToastButton
-      onClick={createNewToast}
-      type='submit'
-      disabled={type ? false : true}>
-      Create new toast
+      onClick={type ? createNewToast(type) : null}
+    >
+      {text}
     </CreateToastButton>
   );
 };
 
 CreateToastBtn.propTypes = {
   createNewToast: PropTypes.func,
-  type: PropTypes.string
+  type: PropTypes.string, 
+  text: PropTypes.string, 
 };
