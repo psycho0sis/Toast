@@ -1,0 +1,25 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["plugin:react/recommended"],  
+    "parserOptions": {
+        "ecmaFeatures": {
+        "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["react", "react-hooks", "prettier", "import", "better-styled-components", "unused-imports"],
+    "rules": {
+        "react/no-unescaped-entities": "off",
+        "import/no-anonymous-default-export": "off",
+        "better-styled-components/sort-declarations-alphabetically": 2
+    },
+    "settings": {
+        "react": {
+        "version": "detect"
+        }
+    }
+}
